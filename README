@@ -1,17 +1,8 @@
-A very simple route planner for EVE Online 
+A route planner designed for use in nullsec
 
-Not optimal, no security status except hardwired restrictions.
-
+Allows addition of your jump bridge network and will take it into account when planning routes
 
 Attibutation:
 
-I originally found the source at:
-http://www.othala.co.uk/2008/02/05/route-finder-for-eve-online/
-
-As that site is no longer in existance:
-http://web.archive.org/web/20090204003853/http://www.othala.co.uk/2008/02/05/route-finder-for-eve-online/
-
-As seen there, the real guts are from:
-http://web.archive.org/web/20070316001615/http://www.asenski.com/archives/7
-
-It's been stripped down since then, to make it generate a simple array of system IDs. 
+Orgional code from:
+https://github.com/fuzzysteve/Eve-Route-Plan
