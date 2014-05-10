@@ -124,21 +124,46 @@ function getRouteData($route){
     
     while($i < (count($route)-1)){
           
-        $query="SELECT type,planet,moon FROM mapsolarsystemjumplists WHERE fromSolarSystemID = ".$route[$i]." AND toSolarSystemID LIKE '%".$route[$i+1]."%' ";
-        
-        //print $query;
-        
+        $query="SELECT planet1,moon1,system1,system2 FROM jumpbridges WHERE system1 = ".$route[$i]." AND system2 = ".$route[$i+1]." ";        
         $stmt = $dbh->prepare($query);
-        $stmt->execute();
+        $stmt->execute();        
+        $result = $stmt->fetch();     
         
+        if ($count = $stmt->rowCount() > 0)
+        {
+            $jumps[$i]["current"] = $result["system1"];
+            $jumps[$i]["next"] = $result["system2"];
+            $jumps[$i]["type"] = "jb";
+            $jumps[$i]["planet"] = $result["planet1"];
+            $jumps[$i]["moon"] = $result["moon1"];
+            
+            $i++;
+            continue;
+            
+        }
+        $query="SELECT planet2,moon2,system1,system2 FROM jumpbridges WHERE system2 = ".$route[$i]." AND system1 = ".$route[$i+1]." ";        
+        $stmt = $dbh->prepare($query);
+        $stmt->execute();        
         $result = $stmt->fetch();
-        
+        if ($count = $stmt->rowCount() > 0)
+        {
+            $jumps[$i]["current"] = $result["system2"];
+            $jumps[$i]["next"] = $result["system1"];
+            $jumps[$i]["type"] = "jb";
+            $jumps[$i]["planet"] = $result["planet2"];
+            $jumps[$i]["moon"] = $result["moon2"];
+            
+            $i++;
+            continue;
+            
+        }
+         
         $jumps[$i]["current"] = $route[$i];
         $jumps[$i]["next"] = $route[$i+1];
-        $jumps[$i]["type"] = $result["type"];
-        $jumps[$i]["planet"] = $result["planet"];
-        $jumps[$i]["moon"] = $result["moon"];
-            
+        $jumps[$i]["type"] = "ga";
+        $jumps[$i]["planet"] = "";
+        $jumps[$i]["moon"] = "";
+        
         $i++;
     
     }
