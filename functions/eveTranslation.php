@@ -8,11 +8,18 @@ function getSystemName($systemId)
     $stmt = $dbh->prepare($query);
     $stmt->execute();
     
-    $row=$stmt->fetchObject();
-    
-    $systemName = trim($row->solarSystemName);
-    
-    return $systemName;
+    if ($count = $stmt->rowCount() < 1){
+        
+        return false;
+        
+    }
+    else{
+        $row=$stmt->fetchObject();
+        
+        $systemName = trim($row->solarSystemName);
+        
+        return $systemName;
+    }
 }
 
 function getSystemID($systemName)
@@ -24,10 +31,19 @@ function getSystemID($systemName)
     $stmt = $dbh->prepare($query);
     $stmt->execute();
     
-    $row=$stmt->fetchObject();
+    if ($count = $stmt->rowCount() < 1){
+        
+        return false;
+        
+    }
+    else{
     
-    $systemID = trim($row->solarSystemID);
-    
-    return $systemID;
+        $row=$stmt->fetchObject();
+        
+        $systemID = trim($row->solarSystemID);
+        
+        return $systemID;
+        
+    }
 }  
 ?>
