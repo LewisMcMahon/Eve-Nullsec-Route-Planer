@@ -1,14 +1,11 @@
 <?php
-
-function getRoute($to,$from)
+function getRoute($from,$to)
 {
-    require_once("../inc/db.inc.php");
     
-    
+    include("inc/db.inc.php");
+              
     $plan='';
-    $route=array();
-    
-    
+    $route=array();       
     
     function graph_find_path( &$G, $A, $B, $M = 50000 )
     {
@@ -68,11 +65,10 @@ function getRoute($to,$from)
         return $P;
     }
     
-    $time_start = microtime(true);
-    
+    //Poulating the jump array from jump list 
     $jumpArray = array();
     
-    $query="SELECT * FROM mapsolarsystemjumplists";
+    $query="SELECT fromSolarSystemID,toSolarSystemID FROM mapsolarsystemjumplists";
     $stmt = $dbh->prepare($query);
     $stmt->execute();
     
@@ -82,10 +78,22 @@ function getRoute($to,$from)
     while ($row=$stmt->fetchObject()) 
     {
         $systemId = trim($row->fromSolarSystemID);
-        $jumpArray[$systemId]= explode(",", strtoupper($row->toSolarSystemID));
+        $jumpArray[$systemId] = explode(",", $row->toSolarSystemID);
     }
     
+    //adding the jump bridges to the list
     
+    $query="SELECT system1,system2 FROM jumpbridges";
+    $stmt = $dbh->prepare($query);
+    $stmt->execute();    
+    while ($row=$stmt->fetchObject()) 
+    {
+        $system1 = trim($row->system1);
+        $system2 = trim($row->system2);
+        array_push($jumpArray[$system1],$system2);
+        array_push($jumpArray[$system2],$system1);
+    }
+ 
     $jumpNum = 1;
     
     foreach( $jumpArray[$from] as $n ) {
@@ -104,9 +112,37 @@ function getRoute($to,$from)
             $jumpNum++;
         }
     }
-    $time_end = microtime(true);
-    $time = round($time_end - $time_start,5);
     
     return $route;
+}
+
+function getRouteData($route){
+    include("inc/db.inc.php");
+
+    $i = 0;
+    $jumps = array();
+    
+    while($i < (count($route)-1)){
+          
+        $query="SELECT type,planet,moon FROM mapsolarsystemjumplists WHERE fromSolarSystemID = ".$route[$i]." AND toSolarSystemID LIKE '%".$route[$i+1]."%' ";
+        
+        //print $query;
+        
+        $stmt = $dbh->prepare($query);
+        $stmt->execute();
+        
+        $result = $stmt->fetch();
+        
+        $jumps[$i]["current"] = $route[$i];
+        $jumps[$i]["next"] = $route[$i+1];
+        $jumps[$i]["type"] = $result["type"];
+        $jumps[$i]["planet"] = $result["planet"];
+        $jumps[$i]["moon"] = $result["moon"];
+            
+        $i++;
+    
+    }
+    
+    return $jumps;
 }
 ?>

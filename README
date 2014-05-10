@@ -6,3 +6,6 @@ Attibutation:
 
 Orgional code from:
 https://github.com/fuzzysteve/Eve-Route-Plan
+
+create table mapSolarSystemJumpLists (id MEDIUMINT primary key AUTO_INCREMENT, fromSolarSystemID int(10),toSolarSystemID text,type varchar(2),planet int(2),moon int(2));
+insert into mapSolarSystemJumpLists (select fromSolarSystemID,group_concat(toSolarSystemID SEPARATOR ',') from mapSolarSystemJumps,mapSolarSystems where mapSolarSystems.solarsystemid=mapSolarSystemJumps.toSolarSystemID group by fromSolarSystemID);
