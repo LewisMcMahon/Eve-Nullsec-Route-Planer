@@ -3,10 +3,11 @@ function getSystemName($systemId)
 {    
     include("inc/db.inc.php");
     
-    $query="SELECT solarSystemName FROM mapsolarsystems WHERE SolarSystemID = ".$systemId."";
+    $query="SELECT solarSystemName FROM mapsolarsystems WHERE SolarSystemID = :system";
             
     $stmt = $dbh->prepare($query);
-    $stmt->execute();
+    $stmt->execute(array(
+        ':system' => $systemId));
     
     if ($count = $stmt->rowCount() < 1){
         
@@ -26,10 +27,11 @@ function getSystemID($systemName)
 {    
     include("inc/db.inc.php");
     
-    $query="SELECT solarSystemID FROM mapsolarsystems WHERE solarSystemName = '".$systemName."'";
+    $query="SELECT solarSystemID FROM mapsolarsystems WHERE solarSystemName = :system";
             
     $stmt = $dbh->prepare($query);
-    $stmt->execute();
+    $stmt->execute(array(
+        ':system' => $systemName));
     
     if ($count = $stmt->rowCount() < 1){
         
