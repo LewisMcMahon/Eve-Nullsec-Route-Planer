@@ -2,7 +2,7 @@
 
 function getRoute($to,$from)
 {
-    require_once("../db.inc.php");
+    require_once("../inc/db.inc.php");
     
     
     $plan='';
