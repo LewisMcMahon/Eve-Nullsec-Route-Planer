@@ -11,4 +11,4 @@ insert into mapSolarSystemJumpLists (select fromSolarSystemID,group_concat(toSol
 
 Low/null sec included:
 create table mapSolarSystemJumpLists (fromSolarSystemID int(10) primary key,toSolarSystemID text);
-insert into mapSolarSystemJumpLists (select fromSolarSystemID,group_concat(toSolarSystemID SEPARATOR ',') from mapSolarSystemJumps,mapSolarSystems where mapSolarSystems.solarsystemid=mapSolarSystemJumps.toSolarSystemID and security>=0.5 group by fromSolarSystemID);
+insert into mapSolarSystemJumpLists (select fromSolarSystemID,group_concat(toSolarSystemID SEPARATOR ',') from mapSolarSystemJumps,mapSolarSystems where mapSolarSystems.solarsystemid=mapSolarSystemJumps.toSolarSystemID group by fromSolarSystemID);
