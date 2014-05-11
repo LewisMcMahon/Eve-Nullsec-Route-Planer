@@ -20,6 +20,15 @@ $headerinfo = getHeaderInfo();
 
 <body>
     <div id="container">
+        
+        <? if ($headerinfo['HTTP_EVE_TRUSTED'] != "Yes"){ ?>
+        
+        <div class="systemData">
+            To take full advantage of the tool use it in the IGB and <a href="#" onclick="CCPEVE.requestTrust('<? print "http://".$_SERVER["SERVER_NAME"]."*";?>');"> trust it</a> and refresh the page.
+        </div>
+        
+        <? } ?>
+        
         <div id="form" class="systemData">
             <form method="get">
                 <input type="text" name="from" value="<?if(isset($_SERVER['HTTP_EVE_SOLARSYSTEMNAME'])){print $_SERVER['HTTP_EVE_SOLARSYSTEMNAME'];}else{print"From";} ?>" class="locationSelect" />

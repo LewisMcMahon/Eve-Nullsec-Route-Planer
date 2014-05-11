@@ -100,6 +100,7 @@ function getHeaderInfo()
     }
 
     else{
+        $headerinfo['HTTP_EVE_TRUSTED'] = false;
         $headerinfo['HTTP_USER_AGENT'] = "NOT-EVE-IGB";
     }
 
