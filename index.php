@@ -4,6 +4,8 @@ include ("functions/route.php");
 include ("functions/insertData.php");
 include ("functions/eveTranslation.php");
 
+$headerinfo = getHeaderInfo();
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -19,11 +21,13 @@ include ("functions/eveTranslation.php");
 
 <body>
     <div id="container">
-        <form method="get">
-            <input type="text" name="from" value="From" class="locationSelect" />
-            <input type="text" name="to" value="To" class="locationSelect" />
-            <input type="submit" value="Submit">
-        </form>
+        <div id="form" class="systemNavPoint">
+            <form method="get">
+                <input type="text" name="from" value="<?if(isset($_SERVER['HTTP_EVE_SOLARSYSTEMNAME'])){print $_SERVER['HTTP_EVE_SOLARSYSTEMNAME'];}else{print"From";} ?>" class="locationSelect" />
+                <input type="text" name="to" value="To" class="locationSelect" />
+                <input type="submit" value="Submit">
+            </form>
+        </div>
         
         <?
         
@@ -38,63 +42,63 @@ include ("functions/eveTranslation.php");
                 
                 $routeData = getRouteData($route);
                 
-                print "From: ".getSystemName($from)." To: ".getSystemName($to)." ".count($routeData)." Jumps";
+                print "<div class='systemNavPoint'>";
+                
+                   print "From: ".getSystemName($from)." To: ".getSystemName($to)." ".count($routeData)." Jumps";
+                
+                print "</div>";
+                
+                if(isset($headerinfo['HTTP_EVE_SOLARSYSTEMNAME'])){
+                    
+                    print "<div>";
+                        print "Currently In: ".$headerinfo['HTTP_EVE_SOLARSYSTEMNAME'];
+                    print "</div>";
+                }                
                 
                 foreach ($routeData as $jump ) {
-                    print "<div id='".getSystemName($jump["current"])."' class='systemNavPoint'";
-                       print "<p>";
-                	       print getSystemName($jump["current"]);
-                        print "</p>";
-                        if ($jump["type"] == "jb"){
-                            print "<p>";
-                                print "Jump Bridge To: ".getSystemName($jump["next"])." Planet: ".$jump["planet"]." Moon: ".$jump["moon"];
-                            print "</p>";
-                        }
-                        else{
-                            print "<p>";
-                                print "Gate To: ".getSystemName($jump["next"]);
-                            print "</p>";
-                        }
-                    print "</div>";
-                    
+                    ?>
+                        <div id='<?print getSystemName($jump["current"])?>' class='systemNavPoint'>
+                            <table width="100%">
+                                <tr>
+                                    <td width="70%">
+                                        <?print getSystemName($jump["current"])." ".$jump["security"];?>
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td >
+                                        <?if ($jump["type"] == "jb"){                                            
+                                            print "Jump Bridge To: ".getSystemName($jump["next"])." Planet: ".$jump["planet"]." Moon: ".$jump["moon"];                                            
+                                        }
+                                        else{
+                                            if($headerinfo['HTTP_USER_AGENT'] == "EVE-IGB"){
+                                                print "Gate To: <a href='#' onclick='CCPEVE.showInfo(5,".$jump["next"].")')>".getSystemName($jump["next"])."</a>";
+                                            }else{
+                                                print "Gate To: ".getSystemName($jump["next"]);
+                                            }
+                                        }?>                                        
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <?print $jump["shipKills"]?> :Kills 
+                                    </td>                                    
+                                </tr>
+                            </table>         
+                         </div>
+                    <?                   
                 }        
             }
             else{
                 
-                print "Enter valid system names";
+                print "<p>Enter valid system names</p>";
             }
         }
+
+        
         ?>
         
-        <script>
-            
-            $(document).ready(function() {
-        
-                function log(message) {
-        
-                    $("<div/>").text(message).prependTo("#log");
-        
-                    $("#log").scrollTop(0);
-        
-                }​
-                
-                $(".locationSelect").autocomplete({
-        
-                    source : "ajax/locationSuggest.php",
-        
-                    minLength : 2,
-        
-                    select : function(event, ui) {
-        
-                        log(ui.item ? "Selected: " + ui.item.value + " aka " + ui.item.id : "Nothing selected, input was " + this.value);
-        
-                    }
-        
-                });
-        
-            });
-            
-        </script>
+        <script src="js/autoComplete.js"></script> 
     </div>
 </body>
 </html>

@@ -6,8 +6,6 @@ $term = mysql_real_escape_string($term);
 
 $term = $term."%";
 
-echo $term;
-
 $q = strtolower($term);
 
 $return = array();

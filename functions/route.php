@@ -61,7 +61,7 @@ function getRoute($from,$to)
                 }
             }
         }
-        
+
         return $P;
     }
     
@@ -99,7 +99,7 @@ function getRoute($from,$to)
     foreach( $jumpArray[$from] as $n ) {
         if ($n == $to) {
             $jumpNum = 2;
-            $route[] = "$to";
+            $route[] = $to;
             break;
         }
     }
@@ -112,6 +112,8 @@ function getRoute($from,$to)
             $jumpNum++;
         }
     }
+    
+    array_unshift($route, $from);
     
     return $route;
 }
@@ -136,6 +138,7 @@ function getRouteData($route){
             $jumps[$i]["type"] = "jb";
             $jumps[$i]["planet"] = $result["planet1"];
             $jumps[$i]["moon"] = $result["moon1"];
+            $jumps[$i]["security"] = number_format(getSystemSecurity($route[$i]),1, '.', '');    
             
             $i++;
             continue;
@@ -152,6 +155,7 @@ function getRouteData($route){
             $jumps[$i]["type"] = "jb";
             $jumps[$i]["planet"] = $result["planet2"];
             $jumps[$i]["moon"] = $result["moon2"];
+            $jumps[$i]["security"] = number_format(getSystemSecurity($route[$i]),1, '.', '');          
             
             $i++;
             continue;
@@ -163,10 +167,44 @@ function getRouteData($route){
         $jumps[$i]["type"] = "ga";
         $jumps[$i]["planet"] = "";
         $jumps[$i]["moon"] = "";
+        $jumps[$i]["security"] = number_format(getSystemSecurity($route[$i]),1, '.', '');    
         
-        $i++;
+        $i++;        
+           
+    }   
     
-    }
+        $url = "https://api.eveonline.com/map/Kills.xml.aspx";
+
+        /*$ch = curl_init();
+        curl_setopt ($ch, CURLOPT_URL, $url);
+        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 15);
+        
+        $file = curl_exec($ch);
+        curl_close($ch); 
+        
+        echo $file;*/
+                
+        $killFeed  =  simplexml_load_file($url);        
+        
+            
+        $i = 0;
+                
+        foreach ($jumps as $jump ) {
+            
+            $killNumber = $killFeed->xpath('//row[@solarSystemID="'.$jump["current"].'"]');
+            
+            if(isset($killNumber[0]['shipKills'])){
+                $jumps[$i]["shipKills"] = $killNumber[0]['shipKills'];
+            }
+            else{
+                $jumps[$i]["shipKills"] = "0";
+            }
+            
+            $i++;
+                        
+        }
     
     return $jumps;
 }

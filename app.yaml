@@ -1,9 +1,0 @@
-application: The Kadeshi Route Planner 
-version: 1
-runtime: php
-api_version: 1
-threadsafe: true
-
-handlers:
-- url: /.*
-  script: index.php
