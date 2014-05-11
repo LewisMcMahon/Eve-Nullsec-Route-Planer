@@ -1,8 +1,6 @@
 <?
 
-$term = $_GET['term'];
-
-$term = mysql_real_escape_string($term);
+$term = $_GET["term"];
 
 $term = $term."%";
 

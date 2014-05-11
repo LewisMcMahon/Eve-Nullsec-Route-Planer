@@ -67,7 +67,7 @@ $headerinfo = getHeaderInfo();
                                         ?>
                                     </td>
                                     <td>
-                                        
+                                        <a href="#" onclick="$(this).closest('.systemNavPoint').remove();">Done</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -84,7 +84,7 @@ $headerinfo = getHeaderInfo();
                                         }?>                                        
                                     </td>
                                     <td style="text-align: right;">
-                                        <?print $jump["shipKills"]?> :Kills 
+                                        <span style='color:<?if($jump["shipKills"]>0){print"red";}?>;'><?print $jump["shipKills"]?></span> :Kills 
                                     </td>                                    
                                 </tr>
                             </table>         
