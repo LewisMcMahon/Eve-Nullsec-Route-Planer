@@ -20,13 +20,15 @@ $headerinfo = getHeaderInfo();
 
 <body>
     <div id="container">
-        <div id="form" class="systemNavPoint">
+        <div id="form" class="systemData">
             <form method="get">
                 <input type="text" name="from" value="<?if(isset($_SERVER['HTTP_EVE_SOLARSYSTEMNAME'])){print $_SERVER['HTTP_EVE_SOLARSYSTEMNAME'];}else{print"From";} ?>" class="locationSelect" />
                 <input type="text" name="to" value="To" class="locationSelect" />
                 <input type="submit" value="Submit">
             </form>
         </div>
+        
+        <div id="log"></div>
         
         <?
         
@@ -41,7 +43,7 @@ $headerinfo = getHeaderInfo();
                 
                 $routeData = getRouteData($route);
                 
-                print "<div class='systemNavPoint'>";
+                print "<div class='systemData'>";
                 
                    print "From: ".getSystemName($from)." To: ".getSystemName($to)." ".count($routeData)." Jumps";
                 
@@ -49,8 +51,8 @@ $headerinfo = getHeaderInfo();
                 
                 if(isset($headerinfo['HTTP_EVE_SOLARSYSTEMNAME'])){
                     
-                    print "<div>";
-                        print "Currently In: ".$headerinfo['HTTP_EVE_SOLARSYSTEMNAME'];
+                    print "<div class='systemData'>";
+                        print "Currently In: <span id='location'>".$headerinfo['HTTP_EVE_SOLARSYSTEMNAME']."</span>";
                     print "</div>";
                 }                
                 
@@ -101,6 +103,7 @@ $headerinfo = getHeaderInfo();
         ?>
         
         <script src="js/autoComplete.js"></script> 
+        <script src="js/systemTracking.js"></script> 
     </div>
 </body>
 </html>

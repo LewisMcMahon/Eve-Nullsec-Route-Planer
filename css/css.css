@@ -23,3 +23,15 @@ body{
 	margin-bottom:10px;
 }
 
+.systemData{
+	background-color:#b0bfff;
+	width:auto;
+	padding:10px;
+	border-style: solid;
+	border-color: white;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	margin-bottom:10px;
+}
+
