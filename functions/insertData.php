@@ -15,4 +15,17 @@ function addJumpBridge($s1,$s1p,$s1m,$s2,$s2p,$s2m)
         ));
     return true;
 }
+
+function getJumpBridges()
+{    
+    include("inc/db.inc.php");
+    
+    $query="SELECT system1, planet1, moon1, system2, planet2, moon2 FROM jumpbridges WHERE 1";
+    $stmt = $dbh->prepare($query);
+    $stmt->execute();
+    
+    $result = $stmt->fetchAll();
+    return $result;
+    
+}
 ?>

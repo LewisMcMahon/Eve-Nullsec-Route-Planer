@@ -1,5 +1,4 @@
 <?
-
 include ("functions/route.php");
 include ("functions/insertData.php");
 include ("functions/eveTranslation.php");
