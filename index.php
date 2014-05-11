@@ -76,7 +76,7 @@ $headerinfo = getHeaderInfo();
                                         print "<span style='color:".secStatusColor($jump["security"])."'>".$jump["security"]."</span>";
                                         ?>
                                     </td>
-                                    <td>
+                                    <td style="text-align:right;" >
                                         <a href="#" onclick="$(this).closest('.systemNavPoint').remove();">Done</a>
                                     </td>
                                 </tr>
