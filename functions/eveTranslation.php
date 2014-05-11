@@ -105,5 +105,40 @@ function getHeaderInfo()
 
     return $headerinfo;           
 
+}
+function secStatusColor($sec){    
+    if($sec >= 1.0){
+        return "#2FEFEF";
+    }
+    elseif($sec >= 0.9){
+        return "#48F0C0";
+    }
+    elseif($sec >= 0.8){
+        return "#00EF47";
+    }
+    elseif($sec >= 0.7){
+        return "#00F000";
+    }
+    elseif($sec >= 0.6){
+        return "#8FEF2F";
+    }
+    elseif($sec >= 0.5){
+        return "#EFEF00";
+    }
+    elseif($sec >= 0.4){
+        return "#D77700";
+    }
+    elseif($sec >= 0.3){
+        return "#F06000";
+    }
+    elseif($sec >= 0.2){
+        return "#F04800";
+    }
+    elseif($sec >= 0.1){
+        return "#D73000";
+    }
+    elseif($sec >= 0.0){
+        return "#F00000";
+    }   
 }  
 ?>

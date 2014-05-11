@@ -61,7 +61,10 @@ $headerinfo = getHeaderInfo();
                             <table width="100%">
                                 <tr>
                                     <td width="70%">
-                                        <?print getSystemName($jump["current"])." ".$jump["security"];?>
+                                        <?print getSystemName($jump["current"])." ";
+                                        
+                                        print "<span style='color:".secStatusColor($jump["security"])."'>".$jump["security"]."</span>";
+                                        ?>
                                     </td>
                                     <td>
                                         
