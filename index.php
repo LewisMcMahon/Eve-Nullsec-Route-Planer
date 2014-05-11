@@ -14,88 +14,87 @@ include ("functions/eveTranslation.php");
     <script src="js/jquery-ui.js"></script>
     
     <link href="css/css.css" rel="stylesheet" type="text/css" />
-    <link href="js/jquery-ui-1.8.20.custom.css" rel="stylesheet" type="text/css" /> 
-          
+    <link href="js/jquery-ui-1.8.20.custom.css" rel="stylesheet" type="text/css" />          
 </head>
 
 <body>
     <div id="container">
-    <form method="get">
-        <input type="text" name="from" value="From" class="locationSelect" />
-        <input type="text" name="to" value="To" class="locationSelect" />
-        <input type="submit" value="Submit">
-    </form>
-    
-    <?
-    
-    if (isset($_GET['from']) and isset($_GET['to'])){
+        <form method="get">
+            <input type="text" name="from" value="From" class="locationSelect" />
+            <input type="text" name="to" value="To" class="locationSelect" />
+            <input type="submit" value="Submit">
+        </form>
         
-        $from = getSystemId($_GET['from']);
-        $to = getSystemId($_GET['to']);
+        <?
         
-        if ($from != false and $to != false){
-        
-            $route = getRoute($from,$to);
+        if (isset($_GET['from']) and isset($_GET['to'])){
             
-            $routeData = getRouteData($route);
+            $from = getSystemId($_GET['from']);
+            $to = getSystemId($_GET['to']);
             
-            print "From: ".getSystemName($from)." To: ".getSystemName($to)." ".count($routeData)." Jumps";
+            if ($from != false and $to != false){
             
-            foreach ($routeData as $jump ) {
-                print "<div id='".getSystemName($jump["current"])."' class='systemNavPoint'";
-                   print "<p>";
-            	       print getSystemName($jump["current"]);
-                    print "</p>";
-                    if ($jump["type"] == "jb"){
-                        print "<p>";
-                            print "Jump Bridge To: ".getSystemName($jump["next"])." Planet: ".$jump["planet"]." Moon: ".$jump["moon"];
-                        print "</p>";
-                    }
-                    else{
-                        print "<p>";
-                            print "Gate To: ".getSystemName($jump["next"]);
-                        print "</p>";
-                    }
-                print "</div>";
+                $route = getRoute($from,$to);
                 
-            }        
+                $routeData = getRouteData($route);
+                
+                print "From: ".getSystemName($from)." To: ".getSystemName($to)." ".count($routeData)." Jumps";
+                
+                foreach ($routeData as $jump ) {
+                    print "<div id='".getSystemName($jump["current"])."' class='systemNavPoint'";
+                       print "<p>";
+                	       print getSystemName($jump["current"]);
+                        print "</p>";
+                        if ($jump["type"] == "jb"){
+                            print "<p>";
+                                print "Jump Bridge To: ".getSystemName($jump["next"])." Planet: ".$jump["planet"]." Moon: ".$jump["moon"];
+                            print "</p>";
+                        }
+                        else{
+                            print "<p>";
+                                print "Gate To: ".getSystemName($jump["next"]);
+                            print "</p>";
+                        }
+                    print "</div>";
+                    
+                }        
+            }
+            else{
+                
+                print "Enter valid system names";
+            }
         }
-        else{
-            
-            print "Enter valid system names";
-        }
-    }
-    ?>
-    
-    <script>
+        ?>
         
-        $(document).ready(function() {
-    
-            function log(message) {
-    
-                $("<div/>").text(message).prependTo("#log");
-    
-                $("#log").scrollTop(0);
-    
-            }​
+        <script>
             
-            $(".locationSelect").autocomplete({
-    
-                source : "ajax/locationSuggest.php",
-    
-                minLength : 2,
-    
-                select : function(event, ui) {
-    
-                    log(ui.item ? "Selected: " + ui.item.value + " aka " + ui.item.id : "Nothing selected, input was " + this.value);
-    
-                }
-    
+            $(document).ready(function() {
+        
+                function log(message) {
+        
+                    $("<div/>").text(message).prependTo("#log");
+        
+                    $("#log").scrollTop(0);
+        
+                }​
+                
+                $(".locationSelect").autocomplete({
+        
+                    source : "ajax/locationSuggest.php",
+        
+                    minLength : 2,
+        
+                    select : function(event, ui) {
+        
+                        log(ui.item ? "Selected: " + ui.item.value + " aka " + ui.item.id : "Nothing selected, input was " + this.value);
+        
+                    }
+        
+                });
+        
             });
-    
-        });
-        
-    </script>
+            
+        </script>
     </div>
 </body>
 </html>
