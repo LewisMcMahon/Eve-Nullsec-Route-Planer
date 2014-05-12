@@ -8,15 +8,19 @@ function checkSystem(){
 	    	currentSolarSystem = val;	    	
 	  	});
 	  	
+	  	$( "#location" ).text(currentSolarSystem);
+	  	
+	  	$( ".locationSelect[name='from']" ).val(currentSolarSystem);
+	  	
 	  	if (previousSolarSystem == ""){
 	  		previousSolarSystem = currentSolarSystem;
 	  		if (window.console) console.log(previousSolarSystem);
 	  	}else{
 	  		if(previousSolarSystem != currentSolarSystem){
 	  			
-	  			$("#"+previousSolarSystem).hide()
+	  			$("#"+previousSolarSystem).hide();
 	  			
-	  			$( "#location" ).text(currentSolarSystem);
+	  			
 	  			
 	  			//alert("removed:"+previousSolarSystem);
 	  			

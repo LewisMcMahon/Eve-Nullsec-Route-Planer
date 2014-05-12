@@ -36,9 +36,7 @@ $headerinfo = getHeaderInfo();
                 <input type="submit" value="Submit">
             </form>
         </div>
-        
-        <div id="log"></div>
-        
+                
         <?
         
         if (isset($_GET['from']) and isset($_GET['to'])){
@@ -71,17 +69,6 @@ $headerinfo = getHeaderInfo();
                             <table width="100%">
                                 <tr>
                                     <td width="70%">
-                                        <?print getSystemName($jump["current"])." ";
-                                        
-                                        print "<span style='color:".secStatusColor($jump["security"])."'>".$jump["security"]."</span>";
-                                        ?>
-                                    </td>
-                                    <td style="text-align:right;" >
-                                        <a href="#" onclick="$(this).closest('.systemNavPoint').remove();">Done</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td >
                                         <?if ($jump["type"] == "jb"){                                            
                                             print "Jump Bridge To: ".getSystemName($jump["next"])." Planet: ".$jump["planet"]." Moon: ".$jump["moon"];                                            
                                         }
@@ -91,7 +78,18 @@ $headerinfo = getHeaderInfo();
                                             }else{
                                                 print "Gate To: ".getSystemName($jump["next"]);
                                             }
-                                        }?>                                        
+                                        }?>
+                                    </td>
+                                    <td style="text-align:right;" >
+                                        <a href="#" onclick="$(this).closest('.systemNavPoint').remove();">Done</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td >
+                                        In: <?print getSystemName($jump["current"])." ";
+                                        
+                                        print "<span style='color:".secStatusColor($jump["security"])."'>".$jump["security"]."</span>";
+                                        ?>                                        
                                     </td>
                                     <td style="text-align: right;">
                                         <span style='color:<?if($jump["shipKills"]>0){print"red";}?>;'><?print $jump["shipKills"]?></span> :Kills 
