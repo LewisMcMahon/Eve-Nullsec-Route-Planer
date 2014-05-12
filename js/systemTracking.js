@@ -18,10 +18,8 @@ function checkSystem(){
 	  	}else{
 	  		if(previousSolarSystem != currentSolarSystem){
 	  			
-	  			$("#"+previousSolarSystem).hide();
-	  			
-	  			
-	  			
+	  			$("#"+previousSolarSystem).hide();	  			
+	  			 			
 	  			//alert("removed:"+previousSolarSystem);
 	  			
 	  			previousSolarSystem = currentSolarSystem;
