@@ -1,4 +1,4 @@
-<?
+<?php
     //TODO remove hardcoded system
     //$_SERVER['HTTP_EVE_SOLARSYSTEMNAME']= "Baratar";
     

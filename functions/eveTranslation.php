@@ -1,4 +1,4 @@
-<?
+<?php
 function getSystemName($systemId)
 {    
     include("inc/db.inc.php");
@@ -81,31 +81,28 @@ function getSystemSecurity($systemId)
 }
 
 
-function getHeaderInfo()
+function getHeaderInfo($eve_headers) {
 
-{
+    $headerinfo = array();
+    $headerinfo['EVE_TRUSTED'] = false;
+    $headerinfo['HTTP_USER_AGENT'] = "NOT-EVE-IGB";
 
-    $headerinfo = "";
-
-    if (strpos($_SERVER ['HTTP_USER_AGENT'], 'EVE-IGB'))
-
+    if (strpos($_SERVER ['HTTP_USER_AGENT'], 'EVE-IGB') !== false)
     {
         $headerinfo['HTTP_USER_AGENT'] = "EVE-IGB";
 
-        if(isset($_SERVER['HTTP_EVE_TRUSTED'])){$headerinfo['HTTP_EVE_TRUSTED'] = $_SERVER['HTTP_EVE_TRUSTED'];}
-        if(isset($_SERVER['HTTP_EVE_SOLARSYSTEMNAME'])){$headerinfo['HTTP_EVE_SOLARSYSTEMNAME'] = $_SERVER['HTTP_EVE_SOLARSYSTEMNAME'];}
-        if(isset($_SERVER['HTTP_EVE_SOLARSYSTEMID'])){$headerinfo['HTTP_EVE_SOLARSYSTEMID'] = $_SERVER['HTTP_EVE_SOLARSYSTEMID'];}    
-        
-
+        if(isset($eve_headers['EVE_TRUSTED']) && $eve_headers['EVE_TRUSTED'] == 'Yes'){
+            $headerinfo['EVE_TRUSTED'] = true;
+        }
+        if(isset($eve_headers['EVE_SOLARSYSTEMNAME'])){
+            $headerinfo['EVE_SOLARSYSTEMNAME'] = $eve_headers['EVE_SOLARSYSTEMNAME'];
+        }
+        if(isset($eve_headers['EVE_SOLARSYSTEMID'])){
+            $headerinfo['EVE_SOLARSYSTEMID'] = $eve_headers['EVE_SOLARSYSTEMID'];
+        }
     }
 
-    else{
-        $headerinfo['HTTP_EVE_TRUSTED'] = false;
-        $headerinfo['HTTP_USER_AGENT'] = "NOT-EVE-IGB";
-    }
-
-    return $headerinfo;           
-
+    return $headerinfo;
 }
 function secStatusColor($sec){    
     if($sec >= 1.0){
