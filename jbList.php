@@ -1,4 +1,4 @@
-<?
+<?php
 include ("functions/route.php");
 include ("functions/insertData.php");
 include ("functions/eveTranslation.php");
@@ -20,7 +20,7 @@ $headerinfo = getHeaderInfo();
 
 <body>
     <div id="container">
-        <?
+        <?php
             
             $jumpBridges = getJumpBridges();
             
@@ -30,27 +30,27 @@ $headerinfo = getHeaderInfo();
                 <table width="500px">
                     <tr>
                         <td width="15%">
-                            <? print getSystemName($bridge["system1"])?>
+                            <?php print getSystemName($bridge["system1"])?>
                         </td>
                         <td width="15%">
-                            Planet: <? print $bridge["planet1"]?>
+                            Planet: <?php print $bridge["planet1"]?>
                         </td>
                         <td width="15%">
-                            Moon: <? print $bridge["moon1"]?>
+                            Moon: <?php print $bridge["moon1"]?>
                         </td>
                         <td width="15%">
-                            <? print getSystemName($bridge["system2"])?>
+                            <?php print getSystemName($bridge["system2"])?>
                         </td>
                         <td width="15%">
-                            Planet: <? print $bridge["planet2"]?>
+                            Planet: <?php print $bridge["planet2"]?>
                         </td>
                         <td width="15%">
-                            Moon: <? print $bridge["moon2"]?>
+                            Moon: <?php print $bridge["moon2"]?>
                         </td>
                     </tr>
                 </table>
                 
-                <?
+                <?php
                 
             }
         

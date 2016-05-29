@@ -1,4 +1,4 @@
-<?
+<?php
 function addJumpBridge($s1,$s1p,$s1m,$s2,$s2p,$s2m)
 {    
     include("inc/db.inc.php");

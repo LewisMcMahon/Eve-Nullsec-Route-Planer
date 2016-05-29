@@ -1,4 +1,4 @@
-<?
+<?php
 
 include ("functions/route.php");
 include ("functions/insertData.php");
