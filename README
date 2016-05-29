@@ -7,9 +7,6 @@ Attibutation:
 Original code from:
 https://github.com/fuzzysteve/Eve-Route-Plan
 
-JB network extension:
-https://github.com/LewisMcMahon/Eve-Nullsec-Route-Planer
-
 -------------
 
 This code depends on having the Static Data Extract from CCP loaded into a mysql database.
